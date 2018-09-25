@@ -129,7 +129,9 @@ class FocusTableViewController: UITableViewController {
     
     func createNotes() {
         let vc = FocusNoteViewController()
+        vc.noteController = noteController
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
+    let noteController = NoteController()
 }

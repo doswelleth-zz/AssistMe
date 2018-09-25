@@ -14,12 +14,12 @@ private let navigationTitle = "Notes"
 class FocusNoteViewController: UIViewController {
     
     let focusNoteDetailCell = FocusNoteDetailCell()
-    let noteController = NoteController()
+    var noteController: NoteController?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        noteController.decode()
+        noteController?.decode()
     }
     
     let collectionView: UICollectionView = {
@@ -74,21 +74,21 @@ extension FocusNoteViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return noteController.notes.count
+        return noteController?.notes.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FocusNoteDetailCell
         
-        let note = noteController.notes[indexPath.row]
+        let note = noteController?.notes[indexPath.row]
     
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .short
         
-        cell.dateLabel.text = formatter.string(from: note.date)
-        cell.noteTextView.text = note.note
+        cell.dateLabel.text = formatter.string(from: note?.date ?? Date())
+        cell.noteTextView.text = note?.note
         
         return cell
     }
@@ -98,8 +98,8 @@ extension FocusNoteViewController: UICollectionViewDataSource {
         let alert = UIAlertController(title: "Delete", message: "Permanently delete this note?", preferredStyle: .alert)
         let yes = UIAlertAction(title: "Yes", style: .destructive) { (actio) in
             
-            let note = self.noteController.notes[indexPath.row]
-            self.noteController.delete(note: note)
+            let note = self.noteController?.notes[indexPath.row]
+            self.noteController?.delete(note: note!)
             self.navigationController?.popViewController(animated: true)
         }
         let no = UIAlertAction(title: "No", style: .default) { (action) in }

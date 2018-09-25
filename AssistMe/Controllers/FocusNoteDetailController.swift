@@ -15,7 +15,7 @@ private let navigationTitle = "Create a Note"
 class FocusNoteDetailController: UIViewController, UITextFieldDelegate {
     
     let note: Note? = nil
-    let noteController = NoteController()
+    var noteController: NoteController?
     
     let dateLabel: UILabel = {
         let label = UILabel()
@@ -64,11 +64,10 @@ class FocusNoteDetailController: UIViewController, UITextFieldDelegate {
     
     @objc private func createButtonTap(sender: UIButton) {
         if let note = note {
-            noteController.update(note: note)
+            noteController?.update(note: note)
         } else if note == nil {
             guard let note = noteTextView.text else { return }
-            noteController.createNote(with: Date(), note: note)
-            noteController.encode()
+            noteController?.createNote(with: Date(), note: note)
         }
         self.navigationController?.popViewController(animated: true)
     }
