@@ -9,18 +9,13 @@
 import UIKit
 import CoreData
 
-private let createANoteTitle = "Create a Note"
+private let navigationTitle = "Create a Note"
 
 
 class FocusNoteDetailController: UIViewController, UITextFieldDelegate {
     
+    let note: Note? = nil
     let noteController = NoteController()
-    
-    var note : Note? {
-        didSet {
-            updateViews()
-        }
-    }
     
     let dateLabel: UILabel = {
         let label = UILabel()
@@ -30,9 +25,6 @@ class FocusNoteDetailController: UIViewController, UITextFieldDelegate {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
-    let date = Date()
-    let formatter = DateFormatter()
     
     let noteTextView: UITextView = {
         let textView = UITextView()
@@ -71,7 +63,6 @@ class FocusNoteDetailController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func createButtonTap(sender: UIButton) {
-        
         if let note = note {
             noteController.update(note: note)
         } else if note == nil {
@@ -80,17 +71,6 @@ class FocusNoteDetailController: UIViewController, UITextFieldDelegate {
             noteController.encode()
         }
         self.navigationController?.popViewController(animated: true)
-    }
-    
-    func updateViews() {
-        guard let note = note else {
-            self.title = createANoteTitle
-            return
-        }
-        formatter.dateStyle = .medium
-        self.title = formatter.string(from: date)
-        self.dateLabel.text = note.date.description
-        self.noteTextView.text = note.note
     }
     
     private func textViewDidBeginEditing(_ noteTextView: UITextView) {
@@ -110,6 +90,14 @@ class FocusNoteDetailController: UIViewController, UITextFieldDelegate {
     private func setUpViews() {
         
         view.backgroundColor = .white
+        
+        self.title = navigationTitle
+        
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        dateLabel.text = formatter.string(from: date)
         
         navigationController?.navigationBar.prefersLargeTitles = true
         
