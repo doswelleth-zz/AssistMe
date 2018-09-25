@@ -68,7 +68,6 @@ class FocusNoteDetailController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         setUpViews()
-        
     }
     
     @objc private func createButtonTap(sender: UIButton) {
