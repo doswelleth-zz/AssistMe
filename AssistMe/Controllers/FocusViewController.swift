@@ -16,11 +16,14 @@ class FocusViewController: UIViewController {
     let focusController = FocusController()
     let noteController = NoteController()
     
+    var sortedFoci: [Focus] = []
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         DispatchQueue.main.async {
-            self.collectionView.reloadData()
+            self.sortedFoci = self.focusController.foci.sorted(by: {$0.sessionDate > $1.sessionDate})
             self.focusController.decode()
+            self.collectionView.reloadData()
         }
     }
     
@@ -46,6 +49,11 @@ class FocusViewController: UIViewController {
         
         self.title = navigationTitle
         
+        DispatchQueue.main.async {
+            self.sortedFoci = self.focusController.foci.sorted(by: {$0.sessionDate > $1.sessionDate})
+            self.focusController.decode()
+            self.collectionView.reloadData()
+        }
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(FocusCell.self, forCellWithReuseIdentifier: reuseIdentifier)
@@ -97,14 +105,14 @@ extension FocusViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return focusController.foci.count
+        return sortedFoci.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FocusCell
         
-        let focus = focusController.foci[indexPath.row]
+        let focus = sortedFoci[indexPath.item]
         
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -119,13 +127,14 @@ extension FocusViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        let focus = sortedFoci[indexPath.item]
+        
         let alert = UIAlertController(title: "Delete", message: "Permanently delete this note?", preferredStyle: .alert)
         let yes = UIAlertAction(title: "Yes", style: .destructive) { (actio) in
             
-            let focus = self.focusController.foci[indexPath.row]
-            self.focusController.delete(focus: focus)
-            
             DispatchQueue.main.async {
+                self.focusController.delete(focus: focus)
+                self.sortedFoci = self.focusController.foci.sorted(by: {$0.sessionDate > $1.sessionDate})
                 self.collectionView.reloadData()
             }
         }
@@ -151,7 +160,7 @@ extension FocusViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: 300, height: 100)
+        return CGSize(width: view.frame.size.width, height: 200)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

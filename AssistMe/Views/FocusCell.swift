@@ -36,6 +36,7 @@ class FocusCell: UICollectionViewCell {
         textField.placeholder = "Session Day"
         textField.tintColor = .black
         textField.font = UIFont.boldSystemFont(ofSize: 17)
+        textField.isUserInteractionEnabled = false
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -46,6 +47,7 @@ class FocusCell: UICollectionViewCell {
         textField.placeholder = "Focus Description"
         textField.tintColor = .black
         textField.font = UIFont.systemFont(ofSize: 15)
+        textField.isUserInteractionEnabled = false
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -69,10 +71,6 @@ class FocusCell: UICollectionViewCell {
         
         dateLabel.text = formatter.string(from: date)
         
-        layer.borderWidth = 0.5
-        layer.borderColor = UIColor.gray.cgColor
-        layer.cornerRadius = 10
-        
         dateLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
         dateLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         dateLabel.widthAnchor.constraint(equalToConstant: 300).isActive = true
@@ -86,6 +84,6 @@ class FocusCell: UICollectionViewCell {
         descriptionTextField.topAnchor.constraint(equalTo: sessionDayTextField.bottomAnchor, constant: 10).isActive = true
         descriptionTextField.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
         descriptionTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        descriptionTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        descriptionTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
 }

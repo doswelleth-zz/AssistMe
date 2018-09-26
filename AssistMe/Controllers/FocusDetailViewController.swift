@@ -39,6 +39,7 @@ class FocusDetailViewController: UIViewController {
         textField.placeholder = "Focus Description"
         textField.tintColor = .black
         textField.font = UIFont.systemFont(ofSize: 15)
+        // number of lines
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -105,10 +106,10 @@ class FocusDetailViewController: UIViewController {
         sessionDayTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
         sessionDayTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
-        descriptionTextField.topAnchor.constraint(equalTo: sessionDayTextField.bottomAnchor, constant: 30).isActive = true
+        descriptionTextField.topAnchor.constraint(equalTo: sessionDayTextField.bottomAnchor, constant: 10).isActive = true
         descriptionTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         descriptionTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        descriptionTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        descriptionTextField.heightAnchor.constraint(equalToConstant: 150).isActive = true
         
         createButton.topAnchor.constraint(equalTo: descriptionTextField.bottomAnchor, constant: 40).isActive = true
         createButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
