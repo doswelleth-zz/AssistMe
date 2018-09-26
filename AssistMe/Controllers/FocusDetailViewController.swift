@@ -11,8 +11,8 @@ import CoreData
 
 class FocusDetailViewController: UIViewController {
     
-    var focusController = FocusController()
-    
+    var focusController: FocusController?
+        
     let sessionDayTextField: UITextField = {
         let textField = UITextField()
         textField.textAlignment = .left

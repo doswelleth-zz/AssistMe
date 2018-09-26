@@ -17,6 +17,8 @@ class FocusNoteDetailController: UIViewController, UITextFieldDelegate {
     let note: Note? = nil
     var noteController: NoteController?
     
+    
+    
     let dateLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center

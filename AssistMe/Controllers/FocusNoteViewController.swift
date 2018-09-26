@@ -18,8 +18,10 @@ class FocusNoteViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        noteController?.decode()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+            self.noteController?.decode()
+        }
     }
     
     let collectionView: UICollectionView = {
@@ -41,6 +43,7 @@ class FocusNoteViewController: UIViewController {
         
         setUpCollectionView()
         setUpNavBar()
+        
         self.title = navigationTitle
         
         collectionView.dataSource = self
@@ -62,6 +65,7 @@ class FocusNoteViewController: UIViewController {
     
     @objc private func rightBarButtonTap(sender: UIButton) {
         let vc = FocusNoteDetailController()
+        vc.noteController = noteController
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -82,7 +86,7 @@ extension FocusNoteViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FocusNoteDetailCell
         
         let note = noteController?.notes[indexPath.row]
-    
+        
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .short
@@ -100,7 +104,10 @@ extension FocusNoteViewController: UICollectionViewDataSource {
             
             let note = self.noteController?.notes[indexPath.row]
             self.noteController?.delete(note: note!)
-            self.navigationController?.popViewController(animated: true)
+            
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
         let no = UIAlertAction(title: "No", style: .default) { (action) in }
         

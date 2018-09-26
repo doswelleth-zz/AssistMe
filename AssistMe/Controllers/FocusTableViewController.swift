@@ -13,6 +13,7 @@ private let reuseIdentifier = "reuseIdentifier"
 
 class FocusTableViewController: UITableViewController {
     
+    let noteController = NoteController()
     let focusController = FocusController()
     
     override func viewDidLoad() {
@@ -124,6 +125,7 @@ class FocusTableViewController: UITableViewController {
     
     func createFocus() {
         let vc = FocusDetailViewController()
+        vc.focusController = focusController
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -132,6 +134,4 @@ class FocusTableViewController: UITableViewController {
         vc.noteController = noteController
         self.navigationController?.pushViewController(vc, animated: true)
     }
-
-    let noteController = NoteController()
 }
