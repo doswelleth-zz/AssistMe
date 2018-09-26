@@ -11,14 +11,24 @@ import CoreData
 
 class FocusDetailViewController: UIViewController {
     
+    let focus: Focus? = nil
     var focusController: FocusController?
+    
+    let dateLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .center
+        label.tintColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
         
     let sessionDayTextField: UITextField = {
         let textField = UITextField()
         textField.textAlignment = .left
         textField.placeholder = "Session Day"
         textField.tintColor = .black
-        textField.font = UIFont.systemFont(ofSize: 20)
+        textField.font = UIFont.systemFont(ofSize: 17)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -28,7 +38,7 @@ class FocusDetailViewController: UIViewController {
         textField.textAlignment = .left
         textField.placeholder = "Focus Description"
         textField.tintColor = .black
-        textField.font = UIFont.systemFont(ofSize: 20)
+        textField.font = UIFont.systemFont(ofSize: 15)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -45,8 +55,19 @@ class FocusDetailViewController: UIViewController {
         return button
     }()
     
-    @objc func createButtonTap(sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
+    @objc private func createButtonTap(sender: UIButton) {
+        
+        if sessionDayTextField.text!.isEmpty || descriptionTextField.text!.isEmpty {
+            let alert = UIAlertController(title: "Error", message: "Please create a focus", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Okay", style: .default) { (action) in
+            }
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        } else {
+            guard let sessionDay = sessionDayTextField.text, let description = descriptionTextField.text else { return }
+            focusController?.createFocus(with: sessionDay, sessionDescription: description, sessionDate: Date())
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     override func viewDidLoad() {
@@ -57,17 +78,29 @@ class FocusDetailViewController: UIViewController {
         navigationController?.hidesBarsOnSwipe = false
         navigationController?.navigationBar.prefersLargeTitles = true
         
+        let date = Date()
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        dateLabel.text = formatter.string(from: date)
+        
         setUpViews()
     }
     
-    func setUpViews() {
+    private func setUpViews() {
         view.backgroundColor = .white
         
+        view.addSubview(dateLabel)
         view.addSubview(sessionDayTextField)
         view.addSubview(descriptionTextField)
         view.addSubview(createButton)
         
-        sessionDayTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 200).isActive = true
+        dateLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200).isActive = true
+        dateLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        dateLabel.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        dateLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        sessionDayTextField.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 30).isActive = true
         sessionDayTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         sessionDayTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
         sessionDayTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true

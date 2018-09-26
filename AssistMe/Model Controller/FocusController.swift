@@ -14,8 +14,8 @@ class FocusController {
     
     private(set) var foci: [Focus] = []
     
-    func createFocus(with sessionDay: String, sessionDescription: String) {
-        let focus = Focus(sessionDay: sessionDay, sessionDescription: sessionDescription)
+    func createFocus(with sessionDay: String, sessionDescription: String, sessionDate: Date) {
+        let focus = Focus(sessionDay: sessionDay, sessionDescription: sessionDescription, sessionDate: sessionDate)
         foci.append(focus)
         encode()
     }

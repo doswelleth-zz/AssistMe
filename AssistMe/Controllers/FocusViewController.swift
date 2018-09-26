@@ -1,35 +1,36 @@
 //
-//  FocusNoteViewController.swift
+//  FocusViewController.swift
 //  AssistMe
 //
-//  Created by David Doswell on 9/24/18.
+//  Created by David Doswell on 9/26/18.
 //  Copyright © 2018 David Doswell. All rights reserved.
 //
 
 import UIKit
 
 private let reuseIdentifier = "reuseIdentifier"
-private let navigationTitle = "Notes"
+private let navigationTitle = "Focus"
 
-class FocusNoteViewController: UIViewController {
-      
-    var noteController: NoteController?
+class FocusViewController: UIViewController {
+        
+    let focusController = FocusController()
+    let noteController = NoteController()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         DispatchQueue.main.async {
             self.collectionView.reloadData()
-            self.noteController?.decode()
+            self.focusController.decode()
         }
     }
     
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        let notesVC = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        notesVC.backgroundColor = .white
-        notesVC.alwaysBounceVertical = true
-        notesVC.showsVerticalScrollIndicator = false
-        return notesVC
+        let focusVC = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        focusVC.backgroundColor = .white
+        focusVC.alwaysBounceVertical = true
+        focusVC.showsVerticalScrollIndicator = false
+        return focusVC
     }()
     
     private func setUpCollectionView() {
@@ -47,10 +48,20 @@ class FocusNoteViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(FocusNoteDetailCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        collectionView.register(FocusCell.self, forCellWithReuseIdentifier: reuseIdentifier)
     }
     
     func setUpNavBar() {
+        let left = UIButton(type: .custom)
+        left.setImage(UIImage(named: "Notes"), for: .normal)
+        left.widthAnchor.constraint(equalToConstant: 90.0).isActive = true
+        left.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        left.contentMode = .scaleAspectFill
+        left.adjustsImageWhenHighlighted = false
+        left.addTarget(self, action: #selector(leftBarButtonTap(sender:)), for: .touchUpInside)
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: left)
+        
         let right = UIButton(type: .custom)
         right.setImage(UIImage(named: "Create"), for: .normal)
         right.widthAnchor.constraint(equalToConstant: 90.0).isActive = true
@@ -60,16 +71,25 @@ class FocusNoteViewController: UIViewController {
         right.addTarget(self, action: #selector(rightBarButtonTap(sender:)), for: .touchUpInside)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: right)
+        
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.tintColor = .black
     }
     
     @objc private func rightBarButtonTap(sender: UIButton) {
-        let vc = FocusNoteDetailController()
+        let vc = FocusDetailViewController()
+        vc.focusController = focusController
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc private func leftBarButtonTap(sender: UIButton) {
+        let vc = FocusNoteViewController()
         vc.noteController = noteController
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
-extension FocusNoteViewController: UICollectionViewDataSource {
+extension FocusViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
@@ -77,21 +97,22 @@ extension FocusNoteViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return noteController?.notes.count ?? 0
+        return focusController.foci.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FocusNoteDetailCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! FocusCell
         
-        let note = noteController?.notes[indexPath.row]
+        let focus = focusController.foci[indexPath.row]
         
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         formatter.timeStyle = .short
         
-        cell.dateLabel.text = formatter.string(from: note?.date ?? Date())
-        cell.noteTextView.text = note?.note
+        cell.dateLabel.text = formatter.string(from: focus.sessionDate)
+        cell.sessionDayTextField.text = focus.sessionDay
+        cell.descriptionTextField.text = focus.sessionDescription
         
         return cell
     }
@@ -101,8 +122,8 @@ extension FocusNoteViewController: UICollectionViewDataSource {
         let alert = UIAlertController(title: "Delete", message: "Permanently delete this note?", preferredStyle: .alert)
         let yes = UIAlertAction(title: "Yes", style: .destructive) { (actio) in
             
-            let note = self.noteController?.notes[indexPath.row]
-            self.noteController?.delete(note: note!)
+            let focus = self.focusController.foci[indexPath.row]
+            self.focusController.delete(focus: focus)
             
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
@@ -126,11 +147,11 @@ extension FocusNoteViewController: UICollectionViewDataSource {
     }
 }
 
-extension FocusNoteViewController: UICollectionViewDelegateFlowLayout {
+extension FocusViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: 300, height: 300)
+        return CGSize(width: 300, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

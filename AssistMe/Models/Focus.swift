@@ -11,4 +11,5 @@ import Foundation
 struct Focus: Codable, Equatable {
     let sessionDay: String
     let sessionDescription: String
+    let sessionDate: Date
 }

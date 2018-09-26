@@ -10,6 +10,16 @@ import UIKit
 
 class FocusNoteDetailCell: UICollectionViewCell {
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        setUpViews()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     let dateLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -31,17 +41,6 @@ class FocusNoteDetailCell: UICollectionViewCell {
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
     }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        setUpViews()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     
     func setUpViews() {
         backgroundColor = .white

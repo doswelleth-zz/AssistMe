@@ -11,13 +11,10 @@ import CoreData
 
 private let navigationTitle = "Create a Note"
 
-
 class FocusNoteDetailController: UIViewController, UITextFieldDelegate {
     
     let note: Note? = nil
     var noteController: NoteController?
-    
-    
     
     let dateLabel: UILabel = {
         let label = UILabel()
@@ -65,13 +62,17 @@ class FocusNoteDetailController: UIViewController, UITextFieldDelegate {
     }
     
     @objc private func createButtonTap(sender: UIButton) {
-        if let note = note {
-            noteController?.update(note: note)
-        } else if note == nil {
+        if noteTextView.text!.isEmpty {
+            let alert = UIAlertController(title: "Error", message: "Please create a note", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Okay", style: .default) { (action) in
+            }
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        } else {
             guard let note = noteTextView.text else { return }
             noteController?.createNote(with: Date(), note: note)
+            self.navigationController?.popViewController(animated: true)
         }
-        self.navigationController?.popViewController(animated: true)
     }
     
     private func textViewDidBeginEditing(_ noteTextView: UITextView) {
