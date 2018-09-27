@@ -57,11 +57,12 @@ class FocusViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(FocusCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        
     }
     
     func setUpNavBar() {
         let left = UIButton(type: .custom)
-        left.setImage(UIImage(named: "Wheel"), for: .normal)
+        left.setImage(UIImage(named: "Logo"), for: .normal)
         left.widthAnchor.constraint(equalToConstant: 30).isActive = true
         left.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
         left.contentMode = .scaleAspectFill
@@ -71,9 +72,9 @@ class FocusViewController: UIViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: left)
         
         let right = UIButton(type: .custom)
-        right.setImage(UIImage(named: "Create"), for: .normal)
-        right.widthAnchor.constraint(equalToConstant: 90.0).isActive = true
-        right.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        right.setImage(UIImage(named: "Wheel"), for: .normal)
+        right.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
+        right.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
         right.contentMode = .scaleAspectFill
         right.adjustsImageWhenHighlighted = false
         right.addTarget(self, action: #selector(rightBarButtonTap(sender:)), for: .touchUpInside)

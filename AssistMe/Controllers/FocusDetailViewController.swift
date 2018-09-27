@@ -94,15 +94,10 @@ class FocusDetailViewController: UIViewController, UITextViewDelegate {
             guard let sessionDay = sessionDayTextField.text, let description = descriptionTextView.text else { return }
             focusController?.createFocus(with: sessionDay, sessionDescription: description, sessionDate: Date())
             
-            createColorWheel()
             sendNotification()
             
             self.navigationController?.popViewController(animated: true)
         }
-    }
-    
-    func createColorWheel() {
-        
     }
     
     func sendNotification() {

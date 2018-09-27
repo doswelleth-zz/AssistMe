@@ -20,7 +20,6 @@
 		49632251215AA435005401D3 /* NoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49632250215AA435005401D3 /* NoteController.swift */; };
 		49632253215AA52A005401D3 /* Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49632252215AA52A005401D3 /* Notes.swift */; };
 		49632255215BE892005401D3 /* FocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49632254215BE892005401D3 /* FocusViewController.swift */; };
-		4963225A215C3E77005401D3 /* WheelTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49632259215C3E77005401D3 /* WheelTimer.swift */; };
 		4963225D215C40CA005401D3 /* ColorWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4963225C215C40CA005401D3 /* ColorWheel.swift */; };
 		4963225F215C5DD6005401D3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4963225E215C5DD6005401D3 /* Extensions.swift */; };
 /* End PBXBuildFile section */
@@ -41,7 +40,6 @@
 		49632250215AA435005401D3 /* NoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteController.swift; sourceTree = "<group>"; };
 		49632252215AA52A005401D3 /* Notes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notes.swift; sourceTree = "<group>"; };
 		49632254215BE892005401D3 /* FocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewController.swift; sourceTree = "<group>"; };
-		49632259215C3E77005401D3 /* WheelTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelTimer.swift; sourceTree = "<group>"; };
 		4963225C215C40CA005401D3 /* ColorWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheel.swift; sourceTree = "<group>"; };
 		4963225E215C5DD6005401D3 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,7 +82,6 @@
 				491997382159C1E4004AFB89 /* Controllers */,
 				4919974E2159F440004AFB89 /* Notifications */,
 				4963225B215C4064005401D3 /* ColorWheel */,
-				49632256215C3C6D005401D3 /* WheelTimer */,
 			);
 			path = AssistMe;
 			sourceTree = "<group>";
@@ -135,14 +132,6 @@
 			children = (
 			);
 			path = Notifications;
-			sourceTree = "<group>";
-		};
-		49632256215C3C6D005401D3 /* WheelTimer */ = {
-			isa = PBXGroup;
-			children = (
-				49632259215C3E77005401D3 /* WheelTimer.swift */,
-			);
-			path = WheelTimer;
 			sourceTree = "<group>";
 		};
 		4963225B215C4064005401D3 /* ColorWheel */ = {
@@ -224,7 +213,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4919974B2159C4CD004AFB89 /* FocusCell.swift in Sources */,
-				4963225A215C3E77005401D3 /* WheelTimer.swift in Sources */,
 				4919973F2159C2AF004AFB89 /* Focus.swift in Sources */,
 				4919974D2159C556004AFB89 /* FocusNoteDetailCell.swift in Sources */,
 				49632253215AA52A005401D3 /* Notes.swift in Sources */,
