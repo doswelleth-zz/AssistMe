@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AudioToolbox
 
 class FocusCell: UICollectionViewCell {
     
@@ -139,7 +140,7 @@ class FocusCell: UICollectionViewCell {
         countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
     }
     
-    @objc func updateTime() {
+    @objc private func updateTime() {
         timerLabel.text = "\(timeFormatted(totalTime))"
         
         if totalTime != 0 {
@@ -154,16 +155,29 @@ class FocusCell: UICollectionViewCell {
         switch totalTime {
         case 2999:
             firstColorWheel.image = secondColorWheel.image
+            let _ = AudioServicesPlaySystemSound(1027)
+            let _ = AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         case 2399:
             firstColorWheel.image = thirdColorWheel.image
+            let _ = AudioServicesPlaySystemSound(1032)
+            let _ = AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         case 1799:
             firstColorWheel.image = fourthColorWheel.image
+            let _ = AudioServicesPlaySystemSound(1023)
+            let _ = AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         case 1199:
             firstColorWheel.image = fifthColorWheel.image
+            let _ = AudioServicesPlaySystemSound(1022)
+            let _ = AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         case 599:
             firstColorWheel.image = sixthColorWheel.image
+            let _ = AudioServicesPlaySystemSound(1030)
+            let _ = AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
         case 0:
             firstColorWheel.image = seventhColorWheel.image
+            let _ = AudioServicesPlaySystemSound(1028)
+            let _ = AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+            endTimer()
         default:
             break
         }
@@ -178,7 +192,18 @@ class FocusCell: UICollectionViewCell {
         let minutes: Int = (totalSeconds / 60) % 60
         return String(format: "%02d:%02d", minutes, seconds)
     }
-
+    
+    private func createAFocus() {
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(createFocusFunction), name: Notification.Name(rawValue: String.notificationName), object: nil)
+    }
+    
+    @objc private func createFocusFunction() {
+        let _ = AudioServicesPlaySystemSound(1027)
+        let _ = AudioServicesPlaySystemSound(kSystemSoundID_Vibrate)
+        startTimer()
+    }
+    
     private func setUpViews() {
         backgroundColor = .white
         addSubview(dateLabel)
@@ -194,6 +219,8 @@ class FocusCell: UICollectionViewCell {
         formatter.dateStyle = .medium
         dateLabel.text = formatter.string(from: date)
         
+        createAFocus()
+        
         dateLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10).isActive = true
         dateLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
         dateLabel.widthAnchor.constraint(equalToConstant: 300).isActive = true
@@ -205,9 +232,9 @@ class FocusCell: UICollectionViewCell {
         sessionDayTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
         firstColorWheel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 5).isActive = true
-        firstColorWheel.rightAnchor.constraint(equalTo: rightAnchor, constant: -30).isActive = true
-        firstColorWheel.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        firstColorWheel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        firstColorWheel.rightAnchor.constraint(equalTo: rightAnchor, constant: -25).isActive = true
+        firstColorWheel.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        firstColorWheel.heightAnchor.constraint(equalToConstant: 40).isActive = true
         
         timerLabel.topAnchor.constraint(equalTo: firstColorWheel.bottomAnchor, constant: 50).isActive = true
         timerLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -30).isActive = true

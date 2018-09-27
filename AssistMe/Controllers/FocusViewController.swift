@@ -7,16 +7,14 @@
 //
 
 import UIKit
-import AudioToolbox
 
 private let reuseIdentifier = "reuseIdentifier"
 private let navigationTitle = "Focus"
 
 class FocusViewController: UIViewController {
-        
-    let focusController = FocusController()    
+    
+    let focusController = FocusController()
     var sortedFoci: [Focus] = []
-    var focusCell: FocusCell?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -57,8 +55,6 @@ class FocusViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(FocusCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
-        createAFocus()
     }
     
     func setUpNavBar() {
@@ -81,18 +77,8 @@ class FocusViewController: UIViewController {
         vc.focusController = focusController
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
-    private func createAFocus() {
-        let nc = NotificationCenter.default
-        nc.addObserver(self, selector: #selector(createFocusFunction), name: Notification.Name(rawValue: String.notificationName), object: nil)
-    }
-    
-    @objc private func createFocusFunction() {
-        let _ = AudioServicesPlaySystemSound(1519)
-        focusCell?.startTimer()
-        focusCell?.zeroColorWheel.image = focusCell?.firstColorWheel.image
-    }
 }
+
 
 extension FocusViewController: UICollectionViewDataSource {
     
