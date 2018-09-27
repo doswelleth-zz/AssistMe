@@ -61,7 +61,7 @@ class FocusViewController: UIViewController {
     
     func setUpNavBar() {
         let left = UIButton(type: .custom)
-        left.setImage(UIImage(named: "Delete"), for: .normal)
+        left.setImage(UIImage(named: "Wheel"), for: .normal)
         left.widthAnchor.constraint(equalToConstant: 30).isActive = true
         left.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
         left.contentMode = .scaleAspectFill

@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import UserNotifications
 
 class FocusDetailViewController: UIViewController, UITextViewDelegate {
     
@@ -81,7 +82,31 @@ class FocusDetailViewController: UIViewController, UITextViewDelegate {
         } else {
             guard let sessionDay = sessionDayTextField.text, let description = descriptionTextView.text else { return }
             focusController?.createFocus(with: sessionDay, sessionDescription: description, sessionDate: Date())
+            
+            sendNotification()
+            
+            // Create Color Wheel
+            
             self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    func sendNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "NEW FOCUS 🎉"
+        content.body = "Let's Goooooo!"
+        content.sound = .default
+        
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: "Notification ID", content: content, trigger: trigger)
+        
+        let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.add(request) { (error) in
+            if let error = error {
+                NSLog("Error scheduling notification \(error)")
+                return
+            }
         }
     }
     
