@@ -29,7 +29,7 @@ class FocusDetailViewController: UIViewController, UITextViewDelegate {
         textField.textAlignment = .left
         textField.placeholder = "Session Day"
         textField.tintColor = .black
-        textField.font = UIFont.systemFont(ofSize: 20)
+        textField.font = UIFont.systemFont(ofSize: 30)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -40,9 +40,20 @@ class FocusDetailViewController: UIViewController, UITextViewDelegate {
         textView.textColor = .lightGray
         textView.textAlignment = .left
         textView.tintColor = .black
-        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.font = UIFont.systemFont(ofSize: 20)
         textView.translatesAutoresizingMaskIntoConstraints = false
         return textView
+    }()
+    
+    let zeroColorWheel: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "Zero")
+        image.layer.cornerRadius = 16
+        image.layer.masksToBounds = true
+        image.contentMode = .scaleAspectFill
+        image.isUserInteractionEnabled = true
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
     }()
     
     func textViewDidBeginEditing(_ textView: UITextView) {
@@ -83,12 +94,15 @@ class FocusDetailViewController: UIViewController, UITextViewDelegate {
             guard let sessionDay = sessionDayTextField.text, let description = descriptionTextView.text else { return }
             focusController?.createFocus(with: sessionDay, sessionDescription: description, sessionDate: Date())
             
+            createColorWheel()
             sendNotification()
-            
-            // Create Color Wheel
             
             self.navigationController?.popViewController(animated: true)
         }
+    }
+    
+    func createColorWheel() {
+        
     }
     
     func sendNotification() {
@@ -135,6 +149,7 @@ class FocusDetailViewController: UIViewController, UITextViewDelegate {
         view.addSubview(dateLabel)
         view.addSubview(sessionDayTextField)
         view.addSubview(descriptionTextView)
+        view.addSubview(zeroColorWheel)
         view.addSubview(createButton)
         
         dateLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200).isActive = true
@@ -145,14 +160,19 @@ class FocusDetailViewController: UIViewController, UITextViewDelegate {
         sessionDayTextField.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 30).isActive = true
         sessionDayTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
         sessionDayTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        sessionDayTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        sessionDayTextField.heightAnchor.constraint(equalToConstant: 31).isActive = true
         
         descriptionTextView.topAnchor.constraint(equalTo: sessionDayTextField.bottomAnchor, constant: 10).isActive = true
         descriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 12).isActive = true
         descriptionTextView.widthAnchor.constraint(equalToConstant: 300).isActive = true
         descriptionTextView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
-        createButton.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 40).isActive = true
+        zeroColorWheel.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 20).isActive = true
+        zeroColorWheel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        zeroColorWheel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        zeroColorWheel.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        createButton.topAnchor.constraint(equalTo: zeroColorWheel.bottomAnchor, constant: 40).isActive = true
         createButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         createButton.widthAnchor.constraint(equalToConstant: 125).isActive = true
         createButton.heightAnchor.constraint(equalToConstant: 50).isActive = true

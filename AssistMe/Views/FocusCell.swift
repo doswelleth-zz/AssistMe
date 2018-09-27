@@ -41,6 +41,17 @@ class FocusCell: UICollectionViewCell {
         return textField
     }()
     
+    let firstColorWheel: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "First")
+        image.layer.cornerRadius = 16
+        image.layer.masksToBounds = true
+        image.contentMode = .scaleAspectFill
+        image.isUserInteractionEnabled = true
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
     let descriptionTextView: UITextView = {
         let textView = UITextView()
         textView.textAlignment = .left
@@ -61,6 +72,7 @@ class FocusCell: UICollectionViewCell {
         backgroundColor = .white
         addSubview(dateLabel)
         addSubview(sessionDayTextField)
+        addSubview(firstColorWheel)
         addSubview(descriptionTextView)
         
         let date = Date()
@@ -82,6 +94,11 @@ class FocusCell: UICollectionViewCell {
         sessionDayTextField.leftAnchor.constraint(equalTo: leftAnchor, constant: 14).isActive = true
         sessionDayTextField.widthAnchor.constraint(equalToConstant: 200).isActive = true
         sessionDayTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
+       
+        firstColorWheel.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 5).isActive = true
+        firstColorWheel.rightAnchor.constraint(equalTo: rightAnchor, constant: -30).isActive = true
+        firstColorWheel.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        firstColorWheel.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
         descriptionTextView.topAnchor.constraint(equalTo: sessionDayTextField.bottomAnchor, constant: 10).isActive = true
         descriptionTextView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
