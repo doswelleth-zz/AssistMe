@@ -22,8 +22,8 @@ class FocusCell: UICollectionViewCell {
     
     let dateLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .black
         label.textAlignment = .center
-        label.tintColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 14)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -35,23 +35,22 @@ class FocusCell: UICollectionViewCell {
         textField.textAlignment = .left
         textField.placeholder = "Session Day"
         textField.tintColor = .black
-        textField.font = UIFont.boldSystemFont(ofSize: 17)
+        textField.font = UIFont.boldSystemFont(ofSize: 20)
         textField.isUserInteractionEnabled = false
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
     
-    let descriptionTextField: UITextField = {
-        let textField = UITextField()
-        textField.textAlignment = .left
-        textField.placeholder = "Focus Description"
-        textField.tintColor = .black
-        textField.font = UIFont.systemFont(ofSize: 15)
-        textField.isUserInteractionEnabled = false
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
+    let descriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.textAlignment = .left
+        textView.tintColor = .black
+        textView.font = UIFont.systemFont(ofSize: 15)
+        textView.isEditable = false
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
     }()
-    
+
     override func setNeedsUpdateConstraints() {
         super.setNeedsUpdateConstraints()
         
@@ -62,12 +61,15 @@ class FocusCell: UICollectionViewCell {
         backgroundColor = .white
         addSubview(dateLabel)
         addSubview(sessionDayTextField)
-        addSubview(descriptionTextField)
+        addSubview(descriptionTextView)
         
         let date = Date()
         let formatter = DateFormatter()
         formatter.timeStyle = .medium
         formatter.dateStyle = .medium
+        
+        layer.borderWidth = 0.5
+        layer.borderColor = UIColor.lightGray.cgColor
         
         dateLabel.text = formatter.string(from: date)
         
@@ -77,13 +79,13 @@ class FocusCell: UICollectionViewCell {
         dateLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
         sessionDayTextField.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 10).isActive = true
-        sessionDayTextField.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
-        sessionDayTextField.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        sessionDayTextField.leftAnchor.constraint(equalTo: leftAnchor, constant: 14).isActive = true
+        sessionDayTextField.widthAnchor.constraint(equalToConstant: 200).isActive = true
         sessionDayTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
-        descriptionTextField.topAnchor.constraint(equalTo: sessionDayTextField.bottomAnchor, constant: 10).isActive = true
-        descriptionTextField.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
-        descriptionTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        descriptionTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        descriptionTextView.topAnchor.constraint(equalTo: sessionDayTextField.bottomAnchor, constant: 10).isActive = true
+        descriptionTextView.leftAnchor.constraint(equalTo: leftAnchor, constant: 10).isActive = true
+        descriptionTextView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        descriptionTextView.heightAnchor.constraint(equalToConstant: 100).isActive = true
     }
 }

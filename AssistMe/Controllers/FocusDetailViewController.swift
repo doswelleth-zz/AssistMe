@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class FocusDetailViewController: UIViewController {
+class FocusDetailViewController: UIViewController, UITextViewDelegate {
     
     let focus: Focus? = nil
     var focusController: FocusController?
@@ -28,21 +28,35 @@ class FocusDetailViewController: UIViewController {
         textField.textAlignment = .left
         textField.placeholder = "Session Day"
         textField.tintColor = .black
-        textField.font = UIFont.systemFont(ofSize: 17)
+        textField.font = UIFont.systemFont(ofSize: 20)
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
     
-    let descriptionTextField: UITextField = {
-        let textField = UITextField()
-        textField.textAlignment = .left
-        textField.placeholder = "Focus Description"
-        textField.tintColor = .black
-        textField.font = UIFont.systemFont(ofSize: 15)
-        // number of lines
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
+    let descriptionTextView: UITextView = {
+        let textView = UITextView()
+        textView.text = "Focus Description"
+        textView.textColor = .lightGray
+        textView.textAlignment = .left
+        textView.tintColor = .black
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        return textView
     }()
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Focus Description"
+            textView.textColor = UIColor.lightGray
+        }
+    }
     
     let createButton: UIButton = {
         let button = UIButton(type: .system)
@@ -58,14 +72,14 @@ class FocusDetailViewController: UIViewController {
     
     @objc private func createButtonTap(sender: UIButton) {
         
-        if sessionDayTextField.text!.isEmpty || descriptionTextField.text!.isEmpty {
+        if sessionDayTextField.text!.isEmpty || descriptionTextView.text!.isEmpty {
             let alert = UIAlertController(title: "Error", message: "Please create a focus", preferredStyle: .alert)
             let action = UIAlertAction(title: "Okay", style: .default) { (action) in
             }
             alert.addAction(action)
             present(alert, animated: true, completion: nil)
         } else {
-            guard let sessionDay = sessionDayTextField.text, let description = descriptionTextField.text else { return }
+            guard let sessionDay = sessionDayTextField.text, let description = descriptionTextView.text else { return }
             focusController?.createFocus(with: sessionDay, sessionDescription: description, sessionDate: Date())
             self.navigationController?.popViewController(animated: true)
         }
@@ -86,6 +100,8 @@ class FocusDetailViewController: UIViewController {
         dateLabel.text = formatter.string(from: date)
         
         setUpViews()
+        
+        descriptionTextView.delegate = self
     }
     
     private func setUpViews() {
@@ -93,7 +109,7 @@ class FocusDetailViewController: UIViewController {
         
         view.addSubview(dateLabel)
         view.addSubview(sessionDayTextField)
-        view.addSubview(descriptionTextField)
+        view.addSubview(descriptionTextView)
         view.addSubview(createButton)
         
         dateLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 200).isActive = true
@@ -102,16 +118,16 @@ class FocusDetailViewController: UIViewController {
         dateLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
         sessionDayTextField.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 30).isActive = true
-        sessionDayTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        sessionDayTextField.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 16).isActive = true
         sessionDayTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
         sessionDayTextField.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
-        descriptionTextField.topAnchor.constraint(equalTo: sessionDayTextField.bottomAnchor, constant: 10).isActive = true
-        descriptionTextField.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        descriptionTextField.widthAnchor.constraint(equalToConstant: 300).isActive = true
-        descriptionTextField.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        descriptionTextView.topAnchor.constraint(equalTo: sessionDayTextField.bottomAnchor, constant: 10).isActive = true
+        descriptionTextView.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 12).isActive = true
+        descriptionTextView.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        descriptionTextView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         
-        createButton.topAnchor.constraint(equalTo: descriptionTextField.bottomAnchor, constant: 40).isActive = true
+        createButton.topAnchor.constraint(equalTo: descriptionTextView.bottomAnchor, constant: 40).isActive = true
         createButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         createButton.widthAnchor.constraint(equalToConstant: 125).isActive = true
         createButton.heightAnchor.constraint(equalToConstant: 50).isActive = true

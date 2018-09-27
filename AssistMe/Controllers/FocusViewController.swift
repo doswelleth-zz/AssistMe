@@ -61,9 +61,9 @@ class FocusViewController: UIViewController {
     
     func setUpNavBar() {
         let left = UIButton(type: .custom)
-        left.setImage(UIImage(named: "Notes"), for: .normal)
-        left.widthAnchor.constraint(equalToConstant: 90.0).isActive = true
-        left.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        left.setImage(UIImage(named: "Delete"), for: .normal)
+        left.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        left.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
         left.contentMode = .scaleAspectFill
         left.adjustsImageWhenHighlighted = false
         left.addTarget(self, action: #selector(leftBarButtonTap(sender:)), for: .touchUpInside)
@@ -120,7 +120,7 @@ extension FocusViewController: UICollectionViewDataSource {
         
         cell.dateLabel.text = formatter.string(from: focus.sessionDate)
         cell.sessionDayTextField.text = focus.sessionDay
-        cell.descriptionTextField.text = focus.sessionDescription
+        cell.descriptionTextView.text = focus.sessionDescription
         
         return cell
     }
@@ -134,7 +134,8 @@ extension FocusViewController: UICollectionViewDataSource {
             
             DispatchQueue.main.async {
                 self.focusController.delete(focus: focus)
-                self.sortedFoci = self.focusController.foci.sorted(by: {$0.sessionDate > $1.sessionDate})
+                self.sortedFoci = self.focusController.foci.sorted(by: { $0.sessionDate > $1.sessionDate })
+                
                 self.collectionView.reloadData()
             }
         }
