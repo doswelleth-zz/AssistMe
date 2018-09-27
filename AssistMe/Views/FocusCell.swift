@@ -14,8 +14,6 @@ class FocusCell: UICollectionViewCell {
         super.init(frame: frame)
         
         setUpViews()
-        
-        startTimer()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -46,13 +44,65 @@ class FocusCell: UICollectionViewCell {
         return textField
     }()
     
+    let zeroColorWheel: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "Zero")
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
     let firstColorWheel: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "First")
-        image.layer.cornerRadius = 16
-        image.layer.masksToBounds = true
-        image.contentMode = .scaleAspectFill
-        image.isUserInteractionEnabled = true
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
+    let secondColorWheel: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "Second")
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
+    let thirdColorWheel: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "Third")
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
+    let fourthColorWheel: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "Fourth")
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
+    let fifthColorWheel: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "Fifth")
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
+    let sixthColorWheel: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "Sixth")
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
+    let seventhColorWheel: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "Seventh")
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
+    let colorWheel: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "Wheel")
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
@@ -64,17 +114,6 @@ class FocusCell: UICollectionViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 17)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }()
-    
-    let secondColorWheel: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(named: "Second")
-        image.layer.cornerRadius = 16
-        image.layer.masksToBounds = true
-        image.contentMode = .scaleAspectFill
-        image.isUserInteractionEnabled = true
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
     }()
     
     let descriptionTextView: UITextView = {
@@ -94,7 +133,7 @@ class FocusCell: UICollectionViewCell {
     }
     
     var countdownTimer: Timer!
-    var totalTime = 900
+    var totalTime = 3600
     
     func startTimer() {
         countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
@@ -105,8 +144,28 @@ class FocusCell: UICollectionViewCell {
         
         if totalTime != 0 {
             totalTime -= 1
+            updateColorWheel()
         } else {
             endTimer()
+        }
+    }
+    
+    func updateColorWheel() {
+        switch totalTime {
+        case 2999:
+            firstColorWheel.image = secondColorWheel.image
+        case 2399:
+            firstColorWheel.image = thirdColorWheel.image
+        case 1799:
+            firstColorWheel.image = fourthColorWheel.image
+        case 1199:
+            firstColorWheel.image = fifthColorWheel.image
+        case 599:
+            firstColorWheel.image = sixthColorWheel.image
+        case 0:
+            firstColorWheel.image = seventhColorWheel.image
+        default:
+            break
         }
     }
     
@@ -125,7 +184,6 @@ class FocusCell: UICollectionViewCell {
         addSubview(dateLabel)
         addSubview(sessionDayTextField)
         addSubview(firstColorWheel)
-        addSubview(secondColorWheel)
         addSubview(timerLabel)
         addSubview(descriptionTextView)
         

@@ -94,6 +94,7 @@ class FocusDetailViewController: UIViewController, UITextViewDelegate {
             guard let sessionDay = sessionDayTextField.text, let description = descriptionTextView.text else { return }
             focusController?.createFocus(with: sessionDay, sessionDescription: description, sessionDate: Date())
             
+            createFocusNotification()
             sendNotification()
             
             self.navigationController?.popViewController(animated: true)
@@ -119,6 +120,11 @@ class FocusDetailViewController: UIViewController, UITextViewDelegate {
         }
     }
     
+    func createFocusNotification() {
+        let nc = NotificationCenter.default
+        nc.post(name: Notification.Name(rawValue: String.notificationName), object: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -136,6 +142,8 @@ class FocusDetailViewController: UIViewController, UITextViewDelegate {
         setUpViews()
         
         descriptionTextView.delegate = self
+        
+        self.hideKeyboardWhenTappedAround()
     }
     
     private func setUpViews() {

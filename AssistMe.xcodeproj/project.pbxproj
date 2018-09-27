@@ -13,12 +13,7 @@
 		4919973F2159C2AF004AFB89 /* Focus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4919973E2159C2AF004AFB89 /* Focus.swift */; };
 		491997432159C351004AFB89 /* FocusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491997422159C351004AFB89 /* FocusController.swift */; };
 		491997452159C404004AFB89 /* FocusDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491997442159C404004AFB89 /* FocusDetailViewController.swift */; };
-		491997472159C43C004AFB89 /* FocusNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491997462159C43C004AFB89 /* FocusNoteViewController.swift */; };
-		491997492159C45A004AFB89 /* FocusNoteDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 491997482159C45A004AFB89 /* FocusNoteDetailController.swift */; };
 		4919974B2159C4CD004AFB89 /* FocusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4919974A2159C4CD004AFB89 /* FocusCell.swift */; };
-		4919974D2159C556004AFB89 /* FocusNoteDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4919974C2159C556004AFB89 /* FocusNoteDetailCell.swift */; };
-		49632251215AA435005401D3 /* NoteController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49632250215AA435005401D3 /* NoteController.swift */; };
-		49632253215AA52A005401D3 /* Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49632252215AA52A005401D3 /* Notes.swift */; };
 		49632255215BE892005401D3 /* FocusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49632254215BE892005401D3 /* FocusViewController.swift */; };
 		4963225D215C40CA005401D3 /* ColorWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4963225C215C40CA005401D3 /* ColorWheel.swift */; };
 		4963225F215C5DD6005401D3 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4963225E215C5DD6005401D3 /* Extensions.swift */; };
@@ -33,12 +28,7 @@
 		4919973E2159C2AF004AFB89 /* Focus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Focus.swift; sourceTree = "<group>"; };
 		491997422159C351004AFB89 /* FocusController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusController.swift; sourceTree = "<group>"; };
 		491997442159C404004AFB89 /* FocusDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusDetailViewController.swift; sourceTree = "<group>"; };
-		491997462159C43C004AFB89 /* FocusNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusNoteViewController.swift; sourceTree = "<group>"; };
-		491997482159C45A004AFB89 /* FocusNoteDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusNoteDetailController.swift; sourceTree = "<group>"; };
 		4919974A2159C4CD004AFB89 /* FocusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusCell.swift; sourceTree = "<group>"; };
-		4919974C2159C556004AFB89 /* FocusNoteDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusNoteDetailCell.swift; sourceTree = "<group>"; };
-		49632250215AA435005401D3 /* NoteController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteController.swift; sourceTree = "<group>"; };
-		49632252215AA52A005401D3 /* Notes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notes.swift; sourceTree = "<group>"; };
 		49632254215BE892005401D3 /* FocusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusViewController.swift; sourceTree = "<group>"; };
 		4963225C215C40CA005401D3 /* ColorWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheel.swift; sourceTree = "<group>"; };
 		4963225E215C5DD6005401D3 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -91,8 +81,6 @@
 			children = (
 				49632254215BE892005401D3 /* FocusViewController.swift */,
 				491997442159C404004AFB89 /* FocusDetailViewController.swift */,
-				491997462159C43C004AFB89 /* FocusNoteViewController.swift */,
-				491997482159C45A004AFB89 /* FocusNoteDetailController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -103,7 +91,6 @@
 				4919972D2159C1C6004AFB89 /* Assets.xcassets */,
 				4919972F2159C1C6004AFB89 /* LaunchScreen.storyboard */,
 				4919974A2159C4CD004AFB89 /* FocusCell.swift */,
-				4919974C2159C556004AFB89 /* FocusNoteDetailCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -112,7 +99,6 @@
 			isa = PBXGroup;
 			children = (
 				491997422159C351004AFB89 /* FocusController.swift */,
-				49632250215AA435005401D3 /* NoteController.swift */,
 			);
 			path = "Model Controller";
 			sourceTree = "<group>";
@@ -121,7 +107,6 @@
 			isa = PBXGroup;
 			children = (
 				4919973E2159C2AF004AFB89 /* Focus.swift */,
-				49632252215AA52A005401D3 /* Notes.swift */,
 				4963225E215C5DD6005401D3 /* Extensions.swift */,
 			);
 			path = Models;
@@ -214,16 +199,11 @@
 			files = (
 				4919974B2159C4CD004AFB89 /* FocusCell.swift in Sources */,
 				4919973F2159C2AF004AFB89 /* Focus.swift in Sources */,
-				4919974D2159C556004AFB89 /* FocusNoteDetailCell.swift in Sources */,
-				49632253215AA52A005401D3 /* Notes.swift in Sources */,
 				491997272159C1C5004AFB89 /* AppDelegate.swift in Sources */,
 				491997452159C404004AFB89 /* FocusDetailViewController.swift in Sources */,
 				49632255215BE892005401D3 /* FocusViewController.swift in Sources */,
 				491997432159C351004AFB89 /* FocusController.swift in Sources */,
 				4963225D215C40CA005401D3 /* ColorWheel.swift in Sources */,
-				491997472159C43C004AFB89 /* FocusNoteViewController.swift in Sources */,
-				491997492159C45A004AFB89 /* FocusNoteDetailController.swift in Sources */,
-				49632251215AA435005401D3 /* NoteController.swift in Sources */,
 				4963225F215C5DD6005401D3 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

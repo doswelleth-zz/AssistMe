@@ -7,17 +7,17 @@
 //
 
 import UIKit
+import AudioToolbox
 
 private let reuseIdentifier = "reuseIdentifier"
 private let navigationTitle = "Focus"
 
 class FocusViewController: UIViewController {
         
-    let focusController = FocusController()
-    let noteController = NoteController()
-    
+    let focusController = FocusController()    
     var sortedFoci: [Focus] = []
-
+    var focusCell: FocusCell?
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         DispatchQueue.main.async {
@@ -58,19 +58,10 @@ class FocusViewController: UIViewController {
         collectionView.delegate = self
         collectionView.register(FocusCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
+        createAFocus()
     }
     
     func setUpNavBar() {
-        let left = UIButton(type: .custom)
-        left.setImage(UIImage(named: "Logo"), for: .normal)
-        left.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        left.heightAnchor.constraint(equalToConstant: 30.0).isActive = true
-        left.contentMode = .scaleAspectFill
-        left.adjustsImageWhenHighlighted = false
-        left.addTarget(self, action: #selector(leftBarButtonTap(sender:)), for: .touchUpInside)
-        
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: left)
-        
         let right = UIButton(type: .custom)
         right.setImage(UIImage(named: "Wheel"), for: .normal)
         right.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
@@ -91,10 +82,15 @@ class FocusViewController: UIViewController {
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc private func leftBarButtonTap(sender: UIButton) {
-        let vc = FocusNoteViewController()
-        vc.noteController = noteController
-        self.navigationController?.pushViewController(vc, animated: true)
+    private func createAFocus() {
+        let nc = NotificationCenter.default
+        nc.addObserver(self, selector: #selector(createFocusFunction), name: Notification.Name(rawValue: String.notificationName), object: nil)
+    }
+    
+    @objc private func createFocusFunction() {
+        let _ = AudioServicesPlaySystemSound(1519)
+        focusCell?.startTimer()
+        focusCell?.zeroColorWheel.image = focusCell?.firstColorWheel.image
     }
 }
 
@@ -140,7 +136,9 @@ extension FocusViewController: UICollectionViewDataSource {
                 self.collectionView.reloadData()
             }
         }
-        let no = UIAlertAction(title: "No", style: .default) { (action) in }
+        let no = UIAlertAction(title: "No", style: .default) { (action) in
+            
+        }
         
         alert.addAction(yes)
         alert.addAction(no)
